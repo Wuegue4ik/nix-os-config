@@ -1,10 +1,8 @@
-{
-
+{ 
   description = "krugets";
-
-  inputs = {
+  inputs = { 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,14 +12,34 @@
       url = "github:nix-community/nixvim/nixos-26.05";
     };
   };
+  outputs = { nixpkgs, home-manager, nixvim, ... }: let system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }: {
+      config = {
+        allowUnfree = true;
+      };
+
+      overlays = [
+        (final: prev: {
+
+        })
+      ];
+    };
+  in
+  {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
+
       modules = [
         ./nixos/configuration.nix
-        
+
+        {
+          nixpkgs.pkgs = pkgs;
+        }
+
         home-manager.nixosModules.home-manager
+
         {
           home-manager = {
             useGlobalPkgs = true;
@@ -37,5 +55,4 @@
       ];
     };
   };
-
-}
+  }

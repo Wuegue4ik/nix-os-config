@@ -32,8 +32,6 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
-
   virtualisation.docker.enable = true;
 
   programs.zsh.enable = true;
