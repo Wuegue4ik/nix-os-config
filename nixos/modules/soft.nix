@@ -1,9 +1,5 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 {
-  disabledModules = ["programs/throne.nix"];
-  imports = [
-    "${pkgs-unstable}/nixos/modules/programs/throne.nix"
-  ];
 
   hardware.opentabletdriver.enable = true;
 
@@ -17,7 +13,6 @@
     gamescope.enable = true;
     throne = {
       enable = true;
-      package = pkgs-unstable.throne;
       tunMode.enable = true;
     };
   };
